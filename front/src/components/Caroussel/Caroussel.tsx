@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
 type Slide = {
   id: string;
@@ -10,24 +10,34 @@ interface CarousselProps {
   interval?: number;
 }
 
-const Caroussel: React.FC<CarousselProps> = ({ slides, interval = 5000 }) => {
+const Caroussel: React.FC<CarousselProps> = ({ slides}) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const nextSlide = useCallback(() => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
   }, [slides.length]);
 
-  useEffect(() => {
-    const timer = setInterval(nextSlide, interval);
-    return () => clearInterval(timer);
-  }, [nextSlide, interval]);
+  const prevSlide = useCallback(() => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
+  }, [slides.length]);
 
   const handleNavClick = (index: number): void => {
     setCurrentIndex(index);
   };
 
+  const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
+    if (event.deltaY > 0) {
+      nextSlide();
+    } else {
+      prevSlide();
+    }
+  };
+
   return (
-    <div className="relative h-96 overflow-hidden">
+    <div
+      className="relative h-96 overflow-hidden"
+      onWheel={handleWheel}
+    >
       {slides.map((slide, index) => (
         <div
           key={slide.id}
@@ -54,7 +64,4 @@ const Caroussel: React.FC<CarousselProps> = ({ slides, interval = 5000 }) => {
     </div>
   );
 };
-
-
-export default Caroussel;
-
+export default Caroussel
