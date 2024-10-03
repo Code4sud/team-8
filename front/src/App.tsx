@@ -9,7 +9,6 @@ function App() {
   const [count, setCount] = useState<number>(0);
 
 
-
   return (
     <>
       <Test count={count} setCount={setCount} />
