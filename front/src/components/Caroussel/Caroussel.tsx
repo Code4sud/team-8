@@ -36,7 +36,10 @@ const Caroussel: React.FC<CarousselProps> = ({ slides }) => {
   };
 
   return (
-    <div className="relative overflow-hidden h-96" onWheel={handleWheel}>
+    <div
+      className="relative w-3/5 h-full overflow-hidden"
+      onWheel={handleWheel}
+    >
       {slides.map((slide, index) => (
         <div
           key={slide.id}
@@ -48,13 +51,17 @@ const Caroussel: React.FC<CarousselProps> = ({ slides }) => {
           {slide.content}
         </div>
       ))}
-      <nav className="absolute flex flex-col gap-8 bottom-2 right-2">
+
+      {/* Navigation Buttons */}
+      <nav className="absolute flex flex-col gap-2 bottom-2 right-2">
         {slides.map((slide, index) => (
           <button
             key={slide.id}
-            className={`bg-gray-300 hover:bg-gray-400 rounded-full ${
-              currentIndex === index ? "bg-gray-500" : ""
-            }`}
+            className={`${
+              currentIndex === index
+                ? "bg-Iqanto-orange-300"
+                : "bg-Iqanto-orange-200 hover:bg-iqanto-orange-400"
+            } rounded-full w-2 h-2 transition-all duration-200 border-none`}
             onClick={() => handleNavClick(index)}
             aria-label={`Go to slide ${index + 1}`}
           />

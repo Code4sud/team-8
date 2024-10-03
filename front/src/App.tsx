@@ -7,8 +7,6 @@ const App: React.FC = () => {
     <div className="grid gap-4 grid-cols-[260px,_1fr] relative w-[100%] h-[calc(100vh-90px)]">
       <Sidebar />
       <Dashboard />
-      {/* <h1>Informations Importantes</h1>
-      <Caroussel slides={CarousselSlides} /> */}
     </div>
   );
 };
