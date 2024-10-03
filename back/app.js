@@ -2,13 +2,16 @@
 
 const path = require("node:path");
 const AutoLoad = require("@fastify/autoload");
+require("dotenv").config();
+const { checkAndCreateDatabase } = require("./db");
 
 // Pass --options via CLI arguments in command to enable these options.
 const options = {};
 
 module.exports = async function (fastify, opts) {
   // Place here your custom code!
-
+  const dbName = process.env.DB_NAME;
+  await checkAndCreateDatabase(dbName);
   // Do not touch the following lines
 
   // This loads all plugins defined in plugins
