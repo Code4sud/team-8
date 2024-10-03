@@ -1,9 +1,15 @@
+import { TopRight } from "../Views/TopRight";
 import { TopBar } from "./TopBar";
 
 export const Dashboard = () => {
   return (
-    <div className="pb-4 rounded-lg shadow bg-Iqanto-white-50 h-[calc(100vh-80px-80px)]">
+    <div className="pb-4 rounded-lg shadow bg-Iqanto-white-50 h-[calc(100vh-80px-80px)] relative">
       <TopBar />
+      <div className="grid h-full grid-cols-4 grid-rows-4 gap-4 px-4">
+        {/* TopRight occupera les deux dernières colonnes et les deux premières lignes */}
+        <TopRight />
+        {/* Vous pouvez ajouter d'autres composants ici pour remplir la grille */}
+      </div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from "react";
 
 type Slide = {
   id: string;
@@ -10,7 +10,7 @@ interface CarousselProps {
   interval?: number;
 }
 
-const Caroussel: React.FC<CarousselProps> = ({ slides}) => {
+const Caroussel: React.FC<CarousselProps> = ({ slides }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const nextSlide = useCallback(() => {
@@ -18,7 +18,9 @@ const Caroussel: React.FC<CarousselProps> = ({ slides}) => {
   }, [slides.length]);
 
   const prevSlide = useCallback(() => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + slides.length) % slides.length
+    );
   }, [slides.length]);
 
   const handleNavClick = (index: number): void => {
@@ -34,10 +36,7 @@ const Caroussel: React.FC<CarousselProps> = ({ slides}) => {
   };
 
   return (
-    <div
-      className="relative h-96 overflow-hidden"
-      onWheel={handleWheel}
-    >
+    <div className="relative overflow-hidden h-96" onWheel={handleWheel}>
       {slides.map((slide, index) => (
         <div
           key={slide.id}
@@ -49,12 +48,12 @@ const Caroussel: React.FC<CarousselProps> = ({ slides}) => {
           {slide.content}
         </div>
       ))}
-      <nav className="absolute bottom-4 right-4 flex flex-col">
+      <nav className="absolute flex flex-col gap-8 bottom-2 right-2">
         {slides.map((slide, index) => (
           <button
             key={slide.id}
-            className={`bg-gray-300 hover:bg-gray-400 rounded-full w-4 h-4 my-1 ${
-              currentIndex === index ? 'bg-gray-500' : ''
+            className={`bg-gray-300 hover:bg-gray-400 rounded-full ${
+              currentIndex === index ? "bg-gray-500" : ""
             }`}
             onClick={() => handleNavClick(index)}
             aria-label={`Go to slide ${index + 1}`}
@@ -64,4 +63,4 @@ const Caroussel: React.FC<CarousselProps> = ({ slides}) => {
     </div>
   );
 };
-export default Caroussel
+export default Caroussel;
