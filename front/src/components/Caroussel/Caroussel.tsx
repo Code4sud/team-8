@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useEffect, useState } from "react";
 
 type Slide = {
   id: string;
@@ -10,20 +10,41 @@ interface CarousselProps {
   interval?: number;
 }
 
-const Caroussel: React.FC<CarousselProps> = ({ slides}) => {
+const Caroussel: React.FC<CarousselProps> = ({ slides }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+  const disablePageScroll = () => {
+    document.body.style.overflowY = "hidden"; // Masque le défilement vertical
+  };
+
+  const enablePageScroll = () => {
+    document.body.style.overflowY = "hidden"; // Réactive le défilement vertical
+  };
+
+  useEffect(() => {
+    const carouselElement = document.getElementById("carousel");
+    if (carouselElement) {
+      carouselElement.addEventListener("mouseenter", disablePageScroll);
+      carouselElement.addEventListener("mouseleave", enablePageScroll);
+    }
+
+    return () => {
+      if (carouselElement) {
+        carouselElement.removeEventListener("mouseenter", disablePageScroll);
+        carouselElement.removeEventListener("mouseleave", enablePageScroll);
+      }
+    };
+  }, []);
 
   const nextSlide = useCallback(() => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
   }, [slides.length]);
 
   const prevSlide = useCallback(() => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + slides.length) % slides.length
+    );
   }, [slides.length]);
-
-  const handleNavClick = (index: number): void => {
-    setCurrentIndex(index);
-  };
 
   const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
     if (event.deltaY > 0) {
@@ -35,7 +56,8 @@ const Caroussel: React.FC<CarousselProps> = ({ slides}) => {
 
   return (
     <div
-      className="relative h-96 overflow-hidden"
+      id="carousel"
+      className="relative w-3/5 h-full overflow-hidden"
       onWheel={handleWheel}
     >
       {slides.map((slide, index) => (
@@ -49,14 +71,14 @@ const Caroussel: React.FC<CarousselProps> = ({ slides}) => {
           {slide.content}
         </div>
       ))}
-      <nav className="absolute bottom-4 right-4 flex flex-col">
+      <nav className="absolute flex flex-col gap-8 bottom-2 right-2">
         {slides.map((slide, index) => (
           <button
             key={slide.id}
-            className={`bg-gray-300 hover:bg-gray-400 rounded-full w-4 h-4 my-1 ${
-              currentIndex === index ? 'bg-gray-500' : ''
-            }`}
-            onClick={() => handleNavClick(index)}
+            className={`bg-yellow-300 hover:bg-gray-400 ${
+              currentIndex === index ? "bg-gray-500" : ""
+            } rounded-full w-4 h-4`}
+            onClick={() => setCurrentIndex(index)}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
@@ -64,4 +86,5 @@ const Caroussel: React.FC<CarousselProps> = ({ slides}) => {
     </div>
   );
 };
-export default Caroussel
+
+export default Caroussel;
