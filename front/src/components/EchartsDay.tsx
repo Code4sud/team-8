@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactECharts from "echarts-for-react";
+import { dataActions } from "@/services/dataService";
 
 const localData = [
   ["2010-05-01", 5],
@@ -39,31 +40,41 @@ const localData2 = [
 ];
 
 const EChartsDay = () => {
-  const [datas, setDatas] = useState([]);
+  const [datas, setDatas] = useState({});
   const [isloading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
+  async function fetchData() {
+    setIsLoading(true);
+    const data = await dataActions.getAverageDayData("marseille");
+    console.log("data", data);
+  }
+
   useEffect(() => {
-    setIsLoading(false);
-    setError("");
-    const options = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-      },
-    };
-    fetch("url/backend", options)
-      .then((response) => response.json())
-      .then((response) => {
-        console.log(response);
-        setDatas(response);
-        setIsLoading(true);
-      })
-      .catch((err) => {
-        setError(err.message);
-        console.log("connexion non établie..." + err.message);
-      });
+    fetchData();
   }, []);
+
+  // useEffect(() => {
+  //   setIsLoading(false);
+  //   setError("");
+  //   const options = {
+  //     method: "GET",
+  //     headers: {
+  //       accept: "application/json",
+  //     },
+  //   };
+  //   fetch("url/backend", options)
+  //     .then((response) => response.json())
+  //     .then((response) => {
+  //       console.log(response);
+  //       setDatas(response);
+  //       setIsLoading(true);
+  //     })
+  //     .catch((err) => {
+  //       setError(err.message);
+  //       console.log("connexion non établie..." + err.message);
+  //     });
+  // }, []);
 
   const xAxisData = localData.map((item) => item[0]);
   const seriesData = localData.map((item) => item[1]);
@@ -106,37 +117,37 @@ const EChartsDay = () => {
     visualMap: {
       top: 50,
       right: 10,
-    //   pieces: [
-    //     {
-    //       gt: 0,
-    //       lte: 5,
-    //       color: "#93CE07",
-    //     },
-        // {
-        //   gt: 5,
-        //   lte: 10,
-        //   color: "#FBDB0F",
-        // },
-        // {
-        //   gt: 10,
-        //   lte: 15,
-        //   color: "#FC7D02",
-        // },
-        // {
-        //   gt: 15,
-        //   lte: 20,
-        //   color: "#FD0100",
-        // },
-        // {
-        //   gt: 20,
-        //   lte: 30,
-        //   color: "#AA069F",
-        // },
-        // {
-        //   gt: 40,
-        //   color: "#AC3B2A",
-        // },
-    //   ],
+      //   pieces: [
+      //     {
+      //       gt: 0,
+      //       lte: 5,
+      //       color: "#93CE07",
+      //     },
+      // {
+      //   gt: 5,
+      //   lte: 10,
+      //   color: "#FBDB0F",
+      // },
+      // {
+      //   gt: 10,
+      //   lte: 15,
+      //   color: "#FC7D02",
+      // },
+      // {
+      //   gt: 15,
+      //   lte: 20,
+      //   color: "#FD0100",
+      // },
+      // {
+      //   gt: 20,
+      //   lte: 30,
+      //   color: "#AA069F",
+      // },
+      // {
+      //   gt: 40,
+      //   color: "#AC3B2A",
+      // },
+      //   ],
       outOfRange: {
         color: "#999",
       },
@@ -151,26 +162,26 @@ const EChartsDay = () => {
           lineStyle: {
             color: "#333",
           },
-        //   data: [
-        //     {
-        //       yAxis: 5,
-        //     },
-        //     {
-        //       yAxis: 10,
-        //     },
-        //     {
-        //       yAxis: 15,
-        //     },
-        //     {
-        //       yAxis: 20,
-        //     },
-        //     {
-        //       yAxis: 30,
-        //     },
-        //     {
-        //       yAxis: 40,
-        //     },
-        //   ],
+          //   data: [
+          //     {
+          //       yAxis: 5,
+          //     },
+          //     {
+          //       yAxis: 10,
+          //     },
+          //     {
+          //       yAxis: 15,
+          //     },
+          //     {
+          //       yAxis: 20,
+          //     },
+          //     {
+          //       yAxis: 30,
+          //     },
+          //     {
+          //       yAxis: 40,
+          //     },
+          //   ],
         },
       },
       {
@@ -195,7 +206,7 @@ const EChartsDay = () => {
   return (
     <>
       {error != "" && <p style={{ color: "red" }}>{error} !</p>}
-      {!isloading && (
+      {isloading && (
         <>
           <p className="loading">Loading...</p>
           {/* <span className="loader"></span> */}
