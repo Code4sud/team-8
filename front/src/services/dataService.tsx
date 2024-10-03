@@ -32,4 +32,18 @@ export const dataActions = {
       throw err;
     }
   },
+
+  // GET AVERAGE DATA PER DAY PER POLLUTANT
+  async getAverageDayData(table: string): Promise<ApiResponse> {
+    try {
+      const response = await fetch(`${PATH}/averageDay/${table}`, {
+        method: "GET",
+      });
+      const res: ApiResponse = await response.json();
+      return res;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  },
 };
