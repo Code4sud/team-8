@@ -12,7 +12,7 @@ import EChartsDay from "./components/EchartsDay";
 
 const App: React.FC = () => {
   return (
-    <div className="grid gap-4 grid-cols-[260px,_1fr] relative w-[100%] h-[calc(100vh-90px)]">
+    <div className="grid gap-2 grid-cols-[160px,_1fr] relative w-[100%] h-[calc(100vh-90px)]">
       <Sidebar />
       <Dashboard />
       {/* <TodayGraph /> */}

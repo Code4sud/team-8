@@ -1,7 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import React, { useState } from "react";
 
 type Slide = {
   id: string;
+
   content: React.ReactNode;
 };
 
@@ -10,81 +12,50 @@ interface CarousselProps {
   interval?: number;
 }
 
-const Caroussel: React.FC<CarousselProps> = ({ slides }) => {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
+const Carousel = ({ slides }: CarousselProps) => {
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-  const disablePageScroll = () => {
-    document.body.style.overflowY = "hidden"; // Masque le défilement vertical
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
   };
 
-  const enablePageScroll = () => {
-    document.body.style.overflowY = "hidden"; // Réactive le défilement vertical
-  };
-
-  useEffect(() => {
-    const carouselElement = document.getElementById("carousel");
-    if (carouselElement) {
-      carouselElement.addEventListener("mouseenter", disablePageScroll);
-      carouselElement.addEventListener("mouseleave", enablePageScroll);
-    }
-
-    return () => {
-      if (carouselElement) {
-        carouselElement.removeEventListener("mouseenter", disablePageScroll);
-        carouselElement.removeEventListener("mouseleave", enablePageScroll);
-      }
-    };
-  }, []);
-
-  const nextSlide = useCallback(() => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
-  }, [slides.length]);
-
-  const prevSlide = useCallback(() => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + slides.length) % slides.length
-    );
-  }, [slides.length]);
-
-  const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
-    if (event.deltaY > 0) {
-      nextSlide();
-    } else {
-      prevSlide();
-    }
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
   };
 
   return (
-    <div
-      id="carousel"
-      className="relative w-3/5 h-full overflow-hidden"
-      onWheel={handleWheel}
-    >
-      {slides.map((slide, index) => (
-        <div
-          key={slide.id}
-          className="absolute top-0 left-0 w-full h-full transition-transform duration-500 ease-in-out"
-          style={{
-            transform: `translateY(${(index - currentIndex) * 100}%)`,
-          }}
-        >
-          {slide.content}
-        </div>
-      ))}
-      <nav className="absolute flex flex-col gap-8 bottom-2 right-2">
+    <div className="relative w-full h-64 overflow-hidden">
+      <div
+        className="absolute top-0 left-0 w-full h-full transition-transform duration-300"
+        style={{ transform: `translateY(-${currentSlide * 100}%)` }}
+      >
         {slides.map((slide, index) => (
-          <button
-            key={slide.id}
-            className={`bg-yellow-300 hover:bg-gray-400 ${
-              currentIndex === index ? "bg-gray-500" : ""
-            } rounded-full w-4 h-4`}
-            onClick={() => setCurrentIndex(index)}
-            aria-label={`Go to slide ${index + 1}`}
-          />
+          <div
+            key={index}
+            className="flex items-center justify-center w-full h-full"
+          >
+            {slide.content}
+          </div>
         ))}
-      </nav>
+      </div>
+
+      {/* Flèches de navigation */}
+      <button
+        className="absolute right-0 p-1 text-gray-800 rounded-md top-2 hover:bg-Iqanto-orange-100 hover:text-Iqanto-white-50"
+        onClick={prevSlide}
+        aria-label="Previous Slide"
+      >
+        <ChevronUp />
+      </button>
+      <button
+        className="absolute right-0 p-1 text-gray-800 rounded-md bottom-2 hover:bg-Iqanto-orange-100 hover:text-Iqanto-white-50"
+        onClick={nextSlide}
+        aria-label="Next Slide"
+      >
+        <ChevronDown />
+      </button>
     </div>
   );
 };
 
-export default Caroussel;
+export default Carousel;
