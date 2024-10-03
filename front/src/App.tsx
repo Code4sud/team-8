@@ -1,4 +1,6 @@
 import "./App.css";
+import Test from "./components/Test";
+import SaviezVous from "./components/SaviezVous/SaviezVous";
 import { Dashboard } from "./components/Dashboard/Dashboard";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 
