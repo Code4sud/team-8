@@ -1,17 +1,15 @@
-import { useState } from "react";
+import React from 'react';
+import Caroussel from './components/Caroussel/Caroussel';
+import CarousselSlides from './components/Caroussel/CarousselSlides'
 
-import "./App.css";
-import Test from "./components/Test";
 
-function App() {
-  const [count, setCount] = useState<number>(0);
-
+const App: React.FC = () => {
   return (
-    <>
-      <Test count={count} setCount={setCount} />
-      <p className="bg-I"> {count} </p>
-    </>
+    <div className="App">
+      <h1>Informations Importantes</h1>
+      <Caroussel slides={CarousselSlides} interval={3000} />
+    </div>
   );
-}
+};
 
 export default App;
