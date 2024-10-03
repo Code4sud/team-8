@@ -5,6 +5,8 @@ const AutoLoad = require("@fastify/autoload");
 require("dotenv").config();
 const { checkAndCreateDatabase } = require("./db");
 
+const cors = require("@fastify/cors");
+
 // Pass --options via CLI arguments in command to enable these options.
 const options = {};
 
@@ -12,6 +14,11 @@ module.exports = async function (fastify, opts) {
   // Place here your custom code!
   const dbName = process.env.DB_NAME;
   await checkAndCreateDatabase(dbName);
+
+  fastify.register(cors, {
+    origin: "*", // Autorise toutes les origines, change cette valeur pour limiter les domaines
+    methods: ["GET", "POST", "PUT", "DELETE"], // Méthodes HTTP autorisées
+  });
   // Do not touch the following lines
 
   // This loads all plugins defined in plugins
