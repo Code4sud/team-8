@@ -1,16 +1,16 @@
-import { useState } from "react";
-
 import "./App.css";
-import Test from "./components/Test";
+import { Dashboard } from "./components/Dashboard/Dashboard";
+import { Sidebar } from "./components/Sidebar/Sidebar";
 
 function App() {
-  const [count, setCount] = useState<number>(0);
+  /* const [count, setCount] = useState<number>(0); */
 
   return (
-    <>
-      <Test count={count} setCount={setCount} />
-      <p className="bg-I"> {count} </p>
-    </>
+    <div className="grid gap-4 grid-cols-[260px,_1fr] relative w-[100%] h-[calc(100vh-90px)]">
+      {/* <Test count={count} setCount={setCount} /> */}
+      <Sidebar />
+      <Dashboard />
+    </div>
   );
 }
 
