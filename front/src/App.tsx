@@ -1,17 +1,14 @@
-import { useState } from "react";
-
 import "./App.css";
-import Test from "./components/Test";
+
+import BarChart from './components/Emission.tsx';
 
 function App() {
-  const [count, setCount] = useState<number>(0);
-
   return (
     <>
-      <Test count={count} setCount={setCount} />
-      <p className="bg-I"> {count} </p>
+      <BarChart />
     </>
   );
-}
+
+};
 
 export default App;
