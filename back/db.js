@@ -71,7 +71,7 @@ const createTableFromCsv = async (csvFilePath, dbName) => {
 
     // Nom de la table (tu peux personnaliser cela)
     const tableName =
-      csvFilePath.split(".")[1] === "/FR00008" ? "marseille" : "bouc_bel_air";
+      csvFilePath.split(".")[1] === "/FR00008" ? "marseille" : "boucBelAir";
 
     // Création de la table dans MariaDB
     const createTableQuery = `CREATE TABLE IF NOT EXISTS ${tableName} (id INT PRIMARY KEY AUTO_INCREMENT,
