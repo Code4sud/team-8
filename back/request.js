@@ -24,4 +24,23 @@ const getDataFromTable = async (tableName) => {
   }
 };
 
-module.exports = { getDataFromTable };
+// fonction qui récupère la moyenne par an de chaque polluant
+
+const getAverageByYear = async (tableName) => {
+  let connection;
+  try {
+    connection = await mysql.createConnection(connectionConfig);
+    const [rows] = await connection.execute(
+      `SELECT YEAR(date) as year, AVG(SO2) as SO2, AVG(NO) as NO, AVG(NO2) as NO2, AVG(NOx) as NOx, AVG(PM10) as PM10, AVG(PM2_5) as PM2_5, AVG(PM1) as PM1 FROM ${tableName} GROUP BY YEAR(date)`
+    );
+    return rows;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    if (connection) {
+      await connection.end();
+    }
+  }
+};
+
+module.exports = { getDataFromTable, getAverageByYear };
