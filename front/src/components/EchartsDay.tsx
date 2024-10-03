@@ -1,15 +1,26 @@
-import { useEffect, useState } from "react";
-import ReactECharts from "echarts-for-react";
 import { dataActions } from "@/services/dataService";
+import ReactECharts from "echarts-for-react";
+import { useEffect, useState } from "react";
 
-const EChartsDay = () => {
+interface EChartsDayProps {
+  town: string;
+}
+
+const EChartsDay = ({ town }: EChartsDayProps) => {
   const [datas, setDatas] = useState([]);
   const [options, setOptions] = useState({});
   const [isloading, setIsLoading] = useState(false);
 
   async function fetchData() {
+    let tableName;
+    if (town === "Marseille") {
+      tableName = "marseille";
+    } else {
+      tableName = "boucBelAir";
+    }
+
     setIsLoading(true);
-    const data = await dataActions.getAverageDayData("marseille");
+    const data = await dataActions.getAverageDayData(tableName);
     console.log("data", data.data);
     setDatas(data.data);
   }
@@ -80,7 +91,7 @@ const EChartsDay = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [town]);
 
   useEffect(() => {
     if (datas.length === 0) return;
@@ -97,12 +108,7 @@ const EChartsDay = () => {
         </>
       )}
       <div>
-        <ReactECharts
-          option={options}
-          notMerge={true}
-          lazyUpdate={true}
-          style={{ height: "400px", width: "100%" }}
-        />
+        <ReactECharts option={options} notMerge={true} lazyUpdate={true} />
       </div>
     </>
   );
