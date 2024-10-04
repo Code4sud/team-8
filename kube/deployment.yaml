@@ -19,6 +19,22 @@ spec:
           image: $IMAGE
           ports:
             - containerPort: 80
+          env:
+            - name: DB_HOST
+              value: 87.106.158.45
+            - name: DB_USER
+              value: root
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb
+                  key: mariadb-root-password
+                  optional: false
+            - name: DB_PORT
+              value: "30810"
+            - name: DB_NAME
+              value: "team8"
+
       #     volumeMounts:
       #       - mountPath: /root/pb_data
       #         name: data-storage
