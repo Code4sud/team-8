@@ -31,7 +31,7 @@ spec:
                   key: mariadb-root-password
                   optional: false
             - name: DB_PORT
-              value: "31217"
+              value: "30810"
             - name: DB_NAME
               value: "team-8"
 
