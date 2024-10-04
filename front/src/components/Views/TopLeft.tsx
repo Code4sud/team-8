@@ -6,7 +6,7 @@ interface TopLeftProps {
 
 export const TopLeft = ({ town }: TopLeftProps) => {
   return (
-    <div className="col-span-4 row-span-4">
+    <div className="col-span-4 row-span-5">
       <EChartsDay town={town} />
     </div>
   );
