@@ -31,7 +31,7 @@ spec:
                   key: mariadb-root-password
                   optional: false
             - name: DB_PORT
-              value: 31217
+              value: "31217"
 
       #     volumeMounts:
       #       - mountPath: /root/pb_data
