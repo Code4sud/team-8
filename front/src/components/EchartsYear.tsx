@@ -29,7 +29,7 @@ const EchartsYear = ({ town }: EChartsYearProps) => {
 
   useEffect(() => {
     if (data.length === 0) return;
-    //récupérer les keys de l'objet data
+
     const keys = Object.keys(data[0]);
     // enlever la clé "year"
     keys.shift();
