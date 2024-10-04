@@ -98,7 +98,7 @@ const EchartsYear = ({ town }: EChartsYearProps) => {
 
   return (
     <div>
-      <h2>Emmissions annuels</h2>
+      <h2>Concentrations moyennes annuelle de certains polluants</h2>
       <div ref={chartRef} style={{ width: "100%", height: "260px" }} />
     </div>
   );
