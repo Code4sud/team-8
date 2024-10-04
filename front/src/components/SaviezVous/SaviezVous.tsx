@@ -1,23 +1,20 @@
-import React from 'react';
-import Carousel from './Carousel'; 
-import SaviezVousP1 from "./SaviezVousP1";
-import SaviezVousP2 from "./SaviezVousP2";
-import SaviezVousP3 from "./SaviezVousP3"; 
+interface SaviezVousProps {
+  data: {
+    id: string;
+    title: string;
+    description: string;
+  };
+}
 
-
-const SaviezVous: React.FC = () => {
-  const slides = [
-    { id: '1', content: <SaviezVousP1 /> },
-    { id: '2', content: <SaviezVousP2 /> },
-    { id: '3', content: <SaviezVousP3 /> },
-  ];
-
+function SaviezVous({ data }: SaviezVousProps) {
   return (
-    <div>
-      <h2>Les principaux polluants atmosphériques</h2>
-      <Carousel slides={slides} />
+    <div className="flex flex-col items-center w-full h-full p-6 bg-white border rounded-lg shadow-md">
+      <h3 className="mb-4 text-xl font-bold text-gray-800">{data.title}</h3>
+      <p className="text-sm leading-relaxed text-gray-600">
+        {data.description}
+      </p>
     </div>
   );
-};
+}
 
 export default SaviezVous;

@@ -3,7 +3,6 @@ import React, { useState } from "react";
 
 type Slide = {
   id: string;
-
   content: React.ReactNode;
 };
 

@@ -1,21 +1,31 @@
 // src/components/BarChart.tsx
-import React, { useEffect, useRef, useState } from "react";
 import * as echarts from "echarts";
+import { useEffect, useRef, useState } from "react";
 import { dataActions } from "../services/dataService";
 
-const BarChart: React.FC = () => {
+interface EChartsYearProps {
+  town: string;
+}
+
+const EchartsYear = ({ town }: EChartsYearProps) => {
   const chartRef = useRef<HTMLDivElement | null>(null);
   const [data, setData] = useState<any>([]);
 
   const getData = async () => {
-    const data = await dataActions.getAverageData("marseille");
+    let tableName;
+    if (town === "Marseille") {
+      tableName = "marseille";
+    } else {
+      tableName = "boucBelAir";
+    }
+    const data = await dataActions.getAverageData(tableName);
     console.log(data);
     setData(data.data);
   };
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [town]);
 
   useEffect(() => {
     if (data.length === 0) return;
@@ -89,9 +99,9 @@ const BarChart: React.FC = () => {
   return (
     <div>
       <h2>Emmissions annuels</h2>
-      <div ref={chartRef} style={{ width: "600px", height: "400px" }} />
+      <div ref={chartRef} style={{ width: "100%", height: "260px" }} />
     </div>
   );
 };
 
-export default BarChart;
+export default EchartsYear;
