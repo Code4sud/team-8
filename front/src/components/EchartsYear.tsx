@@ -42,14 +42,28 @@ const EchartsYear = ({ town }: EChartsYearProps) => {
 
     // Spécifier les options pour le graphique
     const option = {
+      title: {
+        text: "Concentration moyenne annuelle de certains polluants",
+        left: "1%",
+      },
       legend: {
         data: keys,
-        top: "5%",
+        top: "8%",
       },
       xAxis: {
         data: years,
       },
       yAxis: {},
+      toolbox: {
+        right: "10%",
+        feature: {
+          dataZoom: {
+            yAxisIndex: "none",
+          },
+          restore: {},
+          saveAsImage: {},
+        },
+      },
       series: keys.map((key: string) =>
         key === "NOx"
           ? {
@@ -98,7 +112,7 @@ const EchartsYear = ({ town }: EChartsYearProps) => {
 
   return (
     <div>
-      <h2>Concentrations moyennes annuelle de certains polluants</h2>
+      {/* <h2>Concentrations moyennes annuelle de certains polluants</h2> */}
       <div ref={chartRef} style={{ width: "100%", height: "260px" }} />
     </div>
   );
