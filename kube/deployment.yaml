@@ -32,6 +32,8 @@ spec:
                   optional: false
             - name: DB_PORT
               value: "31217"
+            - name: DB_NAME
+              value: "team-8"
 
       #     volumeMounts:
       #       - mountPath: /root/pb_data
