@@ -14,7 +14,7 @@ export const TopBar = ({ town, setTown }: TopBarProps) => {
     }
   }
   return (
-    <div className="p-2 border-b border-stone-200">
+    <div className="p-2 mb-4 border-b border-stone-200">
       <div className="flex items-center justify-between">
         <div className="flex items-center justify-between w-3/5 h-12 px-2 rounded-md bg-Iqanto-orange-200">
           <button className="text-Iqanto-white-50" onClick={changeTown}>
