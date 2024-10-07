@@ -82,7 +82,7 @@ const EChartsDay = ({ town }: EChartsDayProps) => {
       series: keys.map((key: string) => ({
         name: key,
         type: "line",
-        data: datas.map((item: any) => item[key]),
+        data: datas.map((item: any) => item[key] !== null ? item[key].toFixed(2) : null),
       })),
     };
 
